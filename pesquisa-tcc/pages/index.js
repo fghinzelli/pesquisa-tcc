@@ -2,10 +2,8 @@ import HeaderCard from '../components/HeaderCard';
 import QuestionCard from '../components/QuestionCard';
 import TextCard from '../components/TextCard';
 import Chart from '../components/Chart';
-import { Grid, Button, Paper, Stack }  from '@mui/material';
+import { Grid, Button, Paper, Stack, Box }  from '@mui/material';
 import { useState } from 'react';
-import { Box } from '../../../../../../dados/projetos/pesquisa-tcc/pesquisa-tcc/node_modules/@mui/system';
-
 
 export default function Home() {
   const [page, setPage] = useState(1);
