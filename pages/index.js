@@ -2,7 +2,7 @@ import HeaderCard from '../components/HeaderCard';
 import QuestionCard from '../components/QuestionCard';
 import TextCard from '../components/TextCard';
 import Chart from '../components/Chart';
-import { Grid, Button, Paper, Stack, Box }  from '@mui/material';
+import { Grid, Button, Paper, Stack, Box, TextField, Card, CardContent, Typography }  from '@mui/material';
 import { useState } from 'react';
 
 export default function Home() {
@@ -11,6 +11,7 @@ export default function Home() {
   const questions1 = [
     {
       title: 'Gênero',
+      type: 'radio',
       options: [
         {label: 'Feminino', value: 'feminino'},
         {label: 'Masculino', value: 'masculino'},
@@ -19,6 +20,7 @@ export default function Home() {
     },
     {
       title: 'Idade',
+      type: 'radio',
       options: [
         {label: '18 a 30 anos', value: '18 a 30 anos'},
         {label: '31 a 40 anos', value: '31 a 40 anos'},
@@ -28,27 +30,52 @@ export default function Home() {
     },
     {
       title: 'Escolaridade',
+      type: 'radio',
       options: [
         {label: 'Ensino Fundamental', value: 'Ensino Fundamental'},
         {label: 'Ensino médio', value: 'Ensino médio'},
         {label: 'Ensino Superior', value: 'Ensino Superior'},
         {label: 'Pós-Graduação', value: 'Pós-Graduação'}
       ]
+    },
+    {
+      title: 'Qual é o número de funcionários da empresa que atua?',
+      type: 'radio',
+      options: [
+        {label: '0 a 19', value: '0 a 19'},
+        {label: '20 a 49', value: '20 a 49'},
+        {label: '50 a 99', value: '50 a 99'},
+        {label: '100 a 499', value: '100 a 499'},
+        {label: '500 ou mais', value: '500 ou mais'}
+      ]
+    },
+    {
+      title: 'Qual é o setor da empresa?',
+      type: 'radio',
+      options: [
+        {label: 'Serviços', value: 'Serviços'},
+        {label: 'Indústria', value: 'Indústria'},
+        {label: 'Comércio', value: 'Comércio'},
+        {label: 'Construção civil', value: 'Construção civil'},
+        {label: 'Agronegócio', value: 'Agronegócio'}
+      ]
+    },
+    {
+      title: 'Em qual município localiza-se a empresa em qual trabalha?',
+      type: 'text',
+      id: 'input-municipio'
+    },
+    {
+      title: 'Caso deseje receber o resultado desta pesquisa, informe seu e-mail abaixo:',
+      type: 'text',
+      id: 'input-email'
     }
   ]
 
   const questions2 = [
     {
       title: '1. Evito demonstrar minhas emoções. ',
-      options: [
-        {label: 'Quase sempre', value: 'Quase sempre'},
-        {label: 'Muitas vezes', value: 'Muitas vezes'},
-        {label: 'Poucas vezes', value: 'Poucas vezes'},
-        {label: 'Quase nunca', value: 'Quase nunca'},
-      ]
-    },
-    {
-      title: 'Aqui aparecerão as demais questões',
+      type: 'radio',
       options: []
     }
   ]
