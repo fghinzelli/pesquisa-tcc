@@ -1,15 +1,18 @@
 import HeaderCard from '../components/HeaderCard';
 import QuestionCard from '../components/QuestionCard';
 import TextCard from '../components/TextCard';
+import QuestionCardRadioGrid from '../components/QuestionCardRadioGrid';
 import Chart from '../components/Chart';
 import { Grid, Button, Paper, Stack, Box, TextField, Card, CardContent, Typography }  from '@mui/material';
 import { useState } from 'react';
 
 export default function Home() {
   const [page, setPage] = useState(1);
+  const [answers, setAnswers] = useState([])
 
   const questions1 = [
     {
+      id: 1,
       title: 'Gênero',
       type: 'radio',
       options: [
@@ -19,6 +22,7 @@ export default function Home() {
       ]
     },
     {
+      id: 2,
       title: 'Idade',
       type: 'radio',
       options: [
@@ -29,6 +33,7 @@ export default function Home() {
       ]
     },
     {
+      id: 3,
       title: 'Escolaridade',
       type: 'radio',
       options: [
@@ -39,6 +44,7 @@ export default function Home() {
       ]
     },
     {
+      id: 4,
       title: 'Qual é o número de funcionários da empresa que atua?',
       type: 'radio',
       options: [
@@ -50,6 +56,7 @@ export default function Home() {
       ]
     },
     {
+      id: 5,
       title: 'Qual é o setor da empresa?',
       type: 'radio',
       options: [
@@ -61,11 +68,13 @@ export default function Home() {
       ]
     },
     {
+      id: 6,
       title: 'Em qual município localiza-se a empresa em qual trabalha?',
       type: 'text',
       id: 'input-municipio'
     },
     {
+      id: 7,
       title: 'Caso deseje receber o resultado desta pesquisa, informe seu e-mail abaixo:',
       type: 'text',
       id: 'input-email'
@@ -73,12 +82,15 @@ export default function Home() {
   ]
 
   const questions2 = [
-    {
-      title: '1. Evito demonstrar minhas emoções. ',
-      type: 'radio',
-      options: []
-    }
+    { id: 10, title: '1. Evito demonstrar minhas emoções. ', group: 1},
+    { id: 11, title: '2. Evito demonstrar minhas emoções. ', group: 1},
+    { id: 12, title: '3. Evito demonstrar minhas emoções. ', group: 1},
   ]
+
+  const handleSetAnswers = (idAnswer, theAnswer) => {
+    setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
+    console.log(answers)
+  }
 
   let conteudo = null;
 
@@ -106,7 +118,7 @@ export default function Home() {
           { questions1.map((q, k) => <QuestionCard key={k} question={q}/>)}
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ mx: 'auto', maxWidth: '1400px', width: '640px' }}>
+          <Box>
             <Stack spacing={2} direction="row">
               <Button variant="contained" onClick={() => setPage(2)}>Próximo</Button>
             </Stack>
@@ -125,10 +137,10 @@ export default function Home() {
           </TextCard>
         </Grid>
         <Grid item xs={12}>
-          { questions2.map((q, k) => <QuestionCard key={k} question={q}/>)}
+          <QuestionCardRadioGrid  questions={questions2} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
         </Grid> 
         <Grid item xs={12}>
-          <Box sx={{ mx: 'auto', maxWidth: '1400px', width: '640px' }}>
+          <Box sx={{ mx: 'auto' }}>
               <Stack spacing={2} direction="row">
                 <Button variant="outlined" onClick={() => setPage(1)}>Voltar</Button>
                 <Button variant="contained" onClick={() => setPage(3)}>Enviar</Button>
@@ -144,7 +156,7 @@ export default function Home() {
           <Chart />
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ mx: 'auto', maxWidth: '1400px', width: '640px' }}>
+          <Box>
               <Stack spacing={2} direction="row">
                 <Button variant="outlined" onClick={() => setPage(2)}>Voltar</Button>
                 <Button variant="contained" onClick={() => setPage(1)}>Reiniciar</Button>
@@ -157,10 +169,13 @@ export default function Home() {
 
   return (
       <Grid container spacing={2}>
-        <Grid item xs={12} >
+        <Grid item xs={12} md={8} sx={{ mx: 'auto'}}>
           <HeaderCard />
         </Grid>
-        {conteudo}
+        <Grid item xs={12} md={8} sx={{ mx: 'auto'}}>
+          {conteudo}
+        </Grid>
+        
       </Grid>
   )
 }

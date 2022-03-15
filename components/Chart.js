@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-
+import styles from '../styles/Card.module.css';
 
 export default function Chart() {
     const data = [
@@ -44,7 +44,7 @@ export default function Chart() {
       ];
 
     return (
-        <Card sx={{ marginBottom: '16px', borderRadius: '8px', mx: 'auto', maxWidth: '1400px', width: '640px' }}>
+        <Card className={styles.customCard} sx={{ marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
             <CardContent>
                 <Typography sx={{ fontSize: '16px' }} component="div">
                     Resultado
