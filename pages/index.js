@@ -11,8 +11,61 @@ export default function Home() {
   const [answers, setAnswers] = useState([])
 
   const questions1 = [
+    { id: 1, title: '1. Evito demonstrar minhas emoções.'},
+    { id: 2, title: '2. Falo o que penso, mesmo que desagrade a outra parte.'},
+    { id: 3, title: '3. Detesto voltar atrás em tratativas já acordadas.'},
+    { id: 4, title: '4. Peço descontos nos processos realizados.'},
+    { id: 5, title: '5. Sou um negociador de pulso firme que demonstra autoridade.'},
+    { id: 6, title: '6. Entendo o processo de negociação como uma grande batalha muito competitiva.'},
+    { id: 7, title: '7. Pressiono as pessoas envolvidas para que busquem os resultados.'},
+    { id: 8, title: '8. Fico extremamente desconfortável quando não realizo um processo de compra com o objetivo inicial desejado.'},
+    { id: 9, title: '9. Sou exigente, nos processos de compra que participo.'},
+    { id: 10, title: '10. Na maioria das ocasiões evito realizar concessões.'},
+    { id: 11, title: '11. Sinto-me responsável por fazer os fornecedores da empresa "se sentirem bem", com a parceria realizada.'},
+    { id: 12, title: '12. Durante um processo de negociação, raramente utilizo a palavra NÃO.'},
+    { id: 13, title: '13. Tenho vergonha de pedir descontos, por diversos fatores.'},
+    { id: 14, title: '14. Prefiro ceder para evitar discussões nas rodadas de negociações.'},
+    { id: 15, title: '15. Quando não gosto de algo, tenho por característica não me manifestar.'},
+    { id: 16, title: '16. Geralmente espero que a outra parte perceba o que preciso sem ter que manifestar meu interesse.'},
+    { id: 17, title: '17. Evito negociar com representantes de vendas agressivos.'},
+    { id: 18, title: '18. Se tiver a oportunidade de me impor em uma reunião de negociação geralmente sou prestativo procurando favorecer a outra parte.'},
+    { id: 19, title: '19. Sou conciliador, procurando mais diálogo, para buscar entendimento.'},
+    { id: 20, title: '20. Tendo a concordar para evitar, conflitos.'},
+    { id: 21, title: '21. Necessito fazer as coisas o mais depressa possível e terminar de uma vez'},
+    { id: 22, title: '22 Em uma reunião de negociação exponho minhas ideias rapidamente a ponto da outra parte ter dificuldade em me entender.'},
+    { id: 23, title: '23. Sou impaciente, a compra deve ser fechada imediatamente.'},
+    { id: 24, title: '24. Tenho por hábito apressar os fornecedores para o fornecimento de orçamentos e retorno de negociações.'},
+    { id: 25, title: '25. Enquanto estou tratando de um processo de compras, já estou pensando no próximo que vem a seguir.'},
+    { id: 26, title: '26. Evito negociar com pessoas lentas.'},
+    { id: 27, title: '27. Faço as tarefas dos outros por não conseguir esperar que terminem.'},
+    { id: 28, title: '28. Não tenho paciência para longas negociações.'},
+    { id: 29, title: '29. Utilizo da estratégia de interromper a fala da outra parte para impor minha ideia.'},
+    { id: 30, title: '30. Quando realizo questionamentos, sobre minhas dúvidas, desejo que a resposta seja dada de forma imediata.'},
+    { id: 31, title: '31. Todos os processos que participo devem ser executados na maior perfeição.'},
+    { id: 32, title: '32. Entendo que todos os processos não devem ser realizados de forma simples'},
+    { id: 33, title: '33. Sou uma pessoa que se prepara bem e busca informações sobre o assunto, minunciosamente, antes de negociar.'},
+    { id: 34, title: '34. Mesmo que tenha tido êxito em uma negociação, penso que deveria ter feito melhor.'},
+    { id: 35, title: '35. As pessoas me veem como um profissional organizado.'},
+    { id: 36, title: '36. Prefiro que exista formalidade nas negociações.'},
+    { id: 37, title: '37. Não tolero os erros cometidos pelos outros.'},
+    { id: 38, title: '38.  Sempre exijo que os acordos sejam detalhados, contendo todas as informações pertinentes ao processo.'},
+    { id: 39, title: '39. A burocracia de um processo é importante para eficácia da negociação.'},
+    { id: 40, title: '40. Preocupo-me antes da negociação em saber os detalhes do produto, a ponto de realizar pesquisa prévia, solicitar catálogos, realizar visitas, etc.'},
+    { id: 41, title: '41. Sou persuasivo(a), procurando influenciar e impor minhas ideias conduzindo a negociação.'},
+    { id: 42, title: '42. Sou do tipo popular, uma pessoa empática, amável, de fácil convivência.'},
+    { id: 43, title: '43. Me defino como sendo uma pessoa criativa, com percepção tranquila e cheia de ideias.'},
+    { id: 44, title: '44. Sou otimista e acredito que no final tudo dá certo pois nada é impossível.'},
+    { id: 45, title: '45. Procuro manter um relacionamento próximo a amizade com foco em cooperação e simpatia com meus fornecedores.'},
+    { id: 46, title: '46. Sou comunicativo, costumo falar bastante expressando com facilidade as minhas ideias.'},
+    { id: 47, title: '47. Faço concessões para atender os objetivos.'},
+    { id: 48, title: '48. Procuro ser pouco detalhista, pois entendo que o resultado é o que importa.'},
+    { id: 49, title: '49. Na maioria das vezes procuro analisar o comportamento do representante de vendas para entender o seu objetivo.'},
+    { id: 50, title: '50. Procuro utilizar meu poder de convencimento pra impor minhas convicções e aquilo que acredito.'}
+  ];
+
+  const questions2 = [
     {
-      id: 1,
+      id: 51,
       title: 'Gênero',
       type: 'radio',
       options: [
@@ -22,7 +75,7 @@ export default function Home() {
       ]
     },
     {
-      id: 2,
+      id: 52,
       title: 'Idade',
       type: 'radio',
       options: [
@@ -33,7 +86,7 @@ export default function Home() {
       ]
     },
     {
-      id: 3,
+      id: 53,
       title: 'Escolaridade',
       type: 'radio',
       options: [
@@ -44,7 +97,7 @@ export default function Home() {
       ]
     },
     {
-      id: 4,
+      id: 54,
       title: 'Qual é o número de funcionários da empresa que atua?',
       type: 'radio',
       options: [
@@ -56,7 +109,7 @@ export default function Home() {
       ]
     },
     {
-      id: 5,
+      id: 55,
       title: 'Qual é o setor da empresa?',
       type: 'radio',
       options: [
@@ -68,23 +121,17 @@ export default function Home() {
       ]
     },
     {
-      id: 6,
+      id: 56,
       title: 'Em qual município localiza-se a empresa em qual trabalha?',
       type: 'text',
       id: 'input-municipio'
     },
     {
-      id: 7,
+      id: 57,
       title: 'Caso deseje receber o resultado desta pesquisa, informe seu e-mail abaixo:',
       type: 'text',
       id: 'input-email'
     }
-  ]
-
-  const questions2 = [
-    { id: 10, title: '1. Evito demonstrar minhas emoções. ', group: 1},
-    { id: 11, title: '2. Evito demonstrar minhas emoções. ', group: 1},
-    { id: 12, title: '3. Evito demonstrar minhas emoções. ', group: 1},
   ]
 
   const handleSetAnswers = (idAnswer, theAnswer) => {
@@ -99,7 +146,29 @@ export default function Home() {
       <>
         <Grid item xs={12} >
           <TextCard>
-            <p>Prezado (a) Senhor (a):<br/>
+            Levando em consideração, em uma escala, marque a opção que você considera mais adequada para as afirmações que seguem, 
+            que podem lhe caracterizar seu perfil nas situações que envolvem um processo de negociação com os fornecedores de sua empresa.
+
+          </TextCard>
+        </Grid>
+        <Grid item xs={12}>
+          <QuestionCardRadioGrid  questions={questions1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
+        </Grid> 
+        <Grid item xs={12}>
+          <Box sx={{ mx: 'auto' }}>
+            <Stack spacing={2} direction="row">
+              <Button variant="contained" onClick={() => setPage(2)}>Próximo</Button>
+            </Stack>
+          </Box>
+        </Grid>
+      </>
+    )
+  } else if (page === 2) {
+    conteudo = (
+      <>
+        <Grid item xs={12} >
+          <TextCard>
+              Prezado (a) Senhor (a):<br/>
               A presente pesquisa está sendo desenvolvida pelo acadêmico LUCIANO GHINZELLI, sendo requisito parcial à obtenção do título de Bacharel em Administração pela Universidade de Caxias do Sul – CAMPUS SEDE. 
               Essa pesquisa tem como objetivo principal identificar o perfil  de personalidade predominante dos  profissionais de negociação da área de compras, de empresas localizadas na Região Metropolitana da Serra Gaúcha. 
               Todas as informações aqui fornecidas serão tratadas de forma confidencial, tendo utilidade apenas para este trabalho, não sendo divulgadas informações de cunho pessoal como também de empresas. 
@@ -111,44 +180,23 @@ export default function Home() {
               Luciano Ghinzelli<br/>
               Acadêmico de Administração de Empresas<br/>
               Comprador<br/>
-            </p>
+
           </TextCard>
         </Grid>
         <Grid item xs={12}>
-          { questions1.map((q, k) => <QuestionCard key={k} question={q}/>)}
+          { questions2.map((q, k) => <QuestionCard key={k} question={q}/>)}
         </Grid>
         <Grid item xs={12}>
           <Box>
             <Stack spacing={2} direction="row">
-              <Button variant="contained" onClick={() => setPage(2)}>Próximo</Button>
+                <Button variant="outlined" onClick={() => setPage(1)}>Voltar</Button>
+                <Button variant="contained" onClick={() => setPage(3)}>Enviar</Button>
             </Stack>
+            
           </Box>
         </Grid>
       </>
     );
-  } else if (page === 2) {
-    conteudo = (
-      <>
-        <Grid item xs={12} >
-          <TextCard>
-            <p>Levando em consideração, em uma escala, marque a opção que você considera mais adequada para as afirmações que seguem, 
-              que podem lhe caracterizar seu perfil nas situações que envolvem um processo de negociação com os fornecedores de sua empresa.
-            </p>
-          </TextCard>
-        </Grid>
-        <Grid item xs={12}>
-          <QuestionCardRadioGrid  questions={questions2} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
-        </Grid> 
-        <Grid item xs={12}>
-          <Box sx={{ mx: 'auto' }}>
-              <Stack spacing={2} direction="row">
-                <Button variant="outlined" onClick={() => setPage(1)}>Voltar</Button>
-                <Button variant="contained" onClick={() => setPage(3)}>Enviar</Button>
-            </Stack>
-          </Box>
-        </Grid>
-      </>
-    )
   } else if (page === 3) {
     conteudo = (
       <>  

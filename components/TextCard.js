@@ -7,7 +7,7 @@ export default function TextCard(props) {
     return (
         <Card className={styles.customCard} sx={{ p: 2, marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
             <CardContent>
-                <Typography variant="caption" color="text.secondary">
+                <Typography variant="body1" color="text.secondary">
                     {props.children}
                 </Typography>
             </CardContent>

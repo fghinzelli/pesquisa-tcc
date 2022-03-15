@@ -23,7 +23,7 @@ export default function QuestionCard(props) {
         )
     } else if (props.question.type === 'text') {
         component = (
-            <TextField sx={{ minWidth: '400px' }} name="input-municipio" label="" variant="standard" />
+            <TextField fullWidth name="input-municipio" label="" variant="standard" />
         )
     }
 

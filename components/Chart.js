@@ -1,74 +1,93 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import React from 'react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import styles from '../styles/Card.module.css';
 
 export default function Chart() {
     const data = [
         {
-          subject: 'Ousado',
+          subject: 'Competitivo',
           A: 120,
           B: 150,
           fullMark: 150,
         },
         {
-          subject: 'Medroso',
+          subject: 'Cooperativo',
           A: 98,
           B: 130,
           fullMark: 150,
         },
         {
-          subject: 'Vagabundo',
+          subject: 'Impaciente',
           A: 86,
           B: 130,
           fullMark: 150,
         },
         {
-          subject: 'Corneteiro',
+          subject: 'Perfeccionista',
           A: 99,
           B: 100,
           fullMark: 150,
         },
         {
-          subject: 'Audacioso',
+          subject: 'Sedutor',
           A: 85,
           B: 90,
           fullMark: 150,
-        },
-        {
-          subject: 'Molengão',
-          A: 65,
-          B: 85,
-          fullMark: 150,
-        },
+        }
       ];
 
+    const perfis = [
+      { name: 'Competitivo', description: 'Caracteriza-se por ter um perfil competitivo, determinado. É muito ambicioso, odeia perder e evita ceder. Não prioriza o ganha-ganha em uma negociação, pois visa o interesse próprio, dando pouca atenção às necessidades alheias. Pede descontos e negocia duramente.'},
+      { name: 'Cooperante', description: 'Caracteriza-se por ter um perfil flexível e cooperante. Preocupa-se em colaborar, realizando a maioria das ocasiões concessões. Percebe as necessidades da outra parte, priorizando uma negociação de ganha-ganha, firmando contratos de longo prazo e duradouros. Raramente pede descontos e evita ambientes de competitvos.'},
+      { name: 'Impaciente', description: 'Caracteriza-se pela imaciencia, pela sua ansiedade na tomada de decisão. Possui um sendo de urgência, valorizando na maioria das ocasiçoes negócios de oportunidade. Realiza várias tarefas ao mesmo tempo e imcomoda-se com ritmo lento das decisões.'},
+      { name: 'Perfeccionista', description: 'Caracteriza-se por ser detalhista, sendo suas descisões seguidas pelo principio lógico de causa e efeito. Segue rigorosamente as regras e normas de procedimentos. Geralmente, possui uma personalidade reservada, sendo pouco flexível. Pelo seu excesso de formalidade, demora para tomar de decisões. Estuda todo processo antes de iniciar uma negociação para viabilizar o melhor alternativa, com ganhos de ambas as partes.'},
+      { name: 'Sedutor', description: 'Caracteriza-se por ter um perfil que procura manter bons relacionamentos.Tem um ótimo relacionamentos de network. Prioriza o ganha-ganha em uma negociação, porém pode ser muito político e suas decisões podem ser revogadas facilmente. É pouco detalhista, sendo criativo para a condução dos processos.'}
+    ]
+
+
     return (
+      <>
         <Card className={styles.customCard} sx={{ marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
             <CardContent>
-                <Typography sx={{ fontSize: '16px' }} component="div">
+                <Typography variant="h5" sx={{ textAlign: 'center'}}>
                     Resultado
                 </Typography>
-                <RadarChart
-                    cx={300}
-                    cy={250}
-                    outerRadius={150}
-                    width={600}
-                    height={600}
+                <ResponsiveContainer width='100%' height={400}>
+                  <RadarChart
+                    outerRadius={90} width={730} height={250}
                     data={data}
-                >
+                  >
                     <PolarGrid />
                     <PolarAngleAxis dataKey="subject" />
                     <PolarRadiusAxis />
                     <Radar
-                    name="Mike"
-                    dataKey="A"
-                    stroke="#8884d8"
-                    fill="#8884d8"
-                    fillOpacity={0.6}
+                      name="Perfil"
+                      dataKey="A"
+                      stroke="#1976d2"
+                      fill="#1976d2"
+                      fillOpacity={0.6}
                     />
-                </RadarChart>
+                  </RadarChart>
+                </ResponsiveContainer>
             </CardContent>
         </Card>
+        <Card className={styles.customCard} sx={{ marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
+          <CardContent>
+            { perfis.map((perfil, k) => {
+              return (
+                <>
+                  <Typography variant="body1" sx={{ textAlign: 'center', backgroundColor: 'rgba(25, 118, 210, 0.8)', color: 'white', marginTop: '12px', p: 1}} component='div'>
+                    {perfil.name}
+                  </Typography>
+                  <Typography variant="body2" sx={{ p: 1}}>
+                  {perfil.description}
+                  </Typography>
+                </>
+              )
+            })}
+          </CardContent>
+        </Card>
+      </>
     );
   }

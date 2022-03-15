@@ -2,11 +2,6 @@
     font-size: 14px !important;
 }
 
-.customCard {
-    /* max-width: 1400px; */
-    /* width: 800px; */
-  }
-
 .radioRow {
     display: flex;
     flex-direction: row;
