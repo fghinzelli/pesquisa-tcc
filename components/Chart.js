@@ -3,36 +3,31 @@ import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 import styles from '../styles/Card.module.css';
 
-export default function Chart() {
+export default function Chart(props) {
     const data = [
         {
           subject: 'Competitivo',
-          A: 120,
-          B: 150,
+          A: props.total.competitivo,
           fullMark: 150,
         },
         {
           subject: 'Cooperativo',
-          A: 98,
-          B: 130,
+          A: props.total.cooperativo,
           fullMark: 150,
         },
         {
           subject: 'Impaciente',
-          A: 86,
-          B: 130,
+          A: props.total.impaciente,
           fullMark: 150,
         },
         {
           subject: 'Perfeccionista',
-          A: 99,
-          B: 100,
+          A: props.total.perfeccionista,
           fullMark: 150,
         },
         {
           subject: 'Sedutor',
-          A: 85,
-          B: 90,
+          A: props.total.sedutor,
           fullMark: 150,
         }
       ];
@@ -76,14 +71,14 @@ export default function Chart() {
           <CardContent>
             { perfis.map((perfil, k) => {
               return (
-                <>
+                <div key={k}>
                   <Typography variant="body1" sx={{ textAlign: 'center', backgroundColor: 'rgba(25, 118, 210, 0.8)', color: 'white', marginTop: '12px', p: 1}} component='div'>
                     {perfil.name}
                   </Typography>
                   <Typography variant="body2" sx={{ p: 1}}>
                   {perfil.description}
                   </Typography>
-                </>
+                </div>
               )
             })}
           </CardContent>

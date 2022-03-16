@@ -7,6 +7,10 @@ import styles from '../styles/Card.module.css';
 export default function QuestionCard(props) {
     let component = null;
     
+    const handleChangeText = e => {
+        props.setAnswer(props.question.id, e.target.value)
+    }
+
     if (props.question.type === 'radio') {
         component = (
             <RadioGroup name="radio-buttons-group">
@@ -15,7 +19,7 @@ export default function QuestionCard(props) {
                     key={k}
                     className={styles.radioLabel}
                     value={item.value}
-                    control={<Radio />}
+                    control={<Radio onChange={() => props.setAnswer(props.question.id, item.value)}/>}
                     label={item.label}
                     />)
                 })}
@@ -23,7 +27,11 @@ export default function QuestionCard(props) {
         )
     } else if (props.question.type === 'text') {
         component = (
-            <TextField fullWidth name="input-municipio" label="" variant="standard" />
+            <TextField 
+                fullWidth 
+                variant="standard"
+                onChange={handleChangeText} 
+            />
         )
     }
 

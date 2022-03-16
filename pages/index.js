@@ -9,6 +9,7 @@ import { useState } from 'react';
 export default function Home() {
   const [page, setPage] = useState(1);
   const [answers, setAnswers] = useState([])
+  const [totalPerfis, setTotalPerfis] = useState({})
 
   const questions1 = [
     { id: 1, title: '1. Evito demonstrar minhas emoções.'},
@@ -72,7 +73,7 @@ export default function Home() {
         {label: 'Feminino', value: 'feminino'},
         {label: 'Masculino', value: 'masculino'},
         {label: 'Outro', value: 'outro'}
-      ]
+      ] 
     },
     {
       id: 52,
@@ -123,47 +124,60 @@ export default function Home() {
     {
       id: 56,
       title: 'Em qual município localiza-se a empresa em qual trabalha?',
-      type: 'text',
-      id: 'input-municipio'
+      type: 'text'
     },
     {
       id: 57,
       title: 'Caso deseje receber o resultado desta pesquisa, informe seu e-mail abaixo:',
-      type: 'text',
-      id: 'input-email'
+      type: 'text'
     }
   ]
 
+  const radioOptions = [
+    'Quase nunca',
+    'Poucas vezes',
+    'Muitas vezes',
+    'Quase sempre'
+];
+
   const handleSetAnswers = (idAnswer, theAnswer) => {
     setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
-    console.log(answers)
+  }
+
+  const handleValidacao = (nextPage) => {
+
+  }
+
+  const handleEnviar = () => {
+    let perfis = {
+      competitivo: 0,
+      cooperativo: 0,
+      impaciente: 0,
+      perfeccionista: 0,
+      sedutor: 0
+    }
+    answers.forEach(answer => {
+      let contador = radioOptions.indexOf(answer.answer);
+      if (answer.id <= 10) {
+        perfis.competitivo += contador;
+      } else if (answer.id <= 20) {
+        perfis.cooperante += contador;
+      } else if (answer.id <= 30) {
+        perfis.impaciente += contador;
+      } else if (answer.id <= 40) {
+        perfis.perfeccionista += contador;
+      } else if (answer.id <= 50 ) {
+        perfis.sedutor += contador;
+      }
+    });
+    console.log(perfis)
+    setTotalPerfis(perfis);
+    setPage(4)
   }
 
   let conteudo = null;
 
   if (page === 1) {
-    conteudo = (
-      <>
-        <Grid item xs={12} >
-          <TextCard>
-            Levando em consideração, em uma escala, marque a opção que você considera mais adequada para as afirmações que seguem, 
-            que podem lhe caracterizar seu perfil nas situações que envolvem um processo de negociação com os fornecedores de sua empresa.
-
-          </TextCard>
-        </Grid>
-        <Grid item xs={12}>
-          <QuestionCardRadioGrid  questions={questions1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
-        </Grid> 
-        <Grid item xs={12}>
-          <Box sx={{ mx: 'auto' }}>
-            <Stack spacing={2} direction="row">
-              <Button variant="contained" onClick={() => setPage(2)}>Próximo</Button>
-            </Stack>
-          </Box>
-        </Grid>
-      </>
-    )
-  } else if (page === 2) {
     conteudo = (
       <>
         <Grid item xs={12} >
@@ -182,15 +196,34 @@ export default function Home() {
               Comprador<br/>
 
           </TextCard>
+        </Grid> 
+        <Grid item xs={12}>
+          <Box sx={{ mx: 'auto' }}>
+            <Stack spacing={2} direction="row">
+              <Button variant="contained" color="inherit" onClick={() => setPage(2)}>Próxima</Button>
+            </Stack>
+          </Box>
+        </Grid>
+      </>
+    )
+  } else if (page === 2) {
+    conteudo = (
+      <>
+        <Grid item xs={12} >
+          <TextCard>
+            Levando em consideração, em uma escala, marque a opção que você considera mais adequada para as afirmações que seguem, 
+            que podem lhe caracterizar seu perfil nas situações que envolvem um processo de negociação com os fornecedores de sua empresa.
+
+          </TextCard>
         </Grid>
         <Grid item xs={12}>
-          { questions2.map((q, k) => <QuestionCard key={k} question={q}/>)}
+          <QuestionCardRadioGrid radioOptions={radioOptions.reverse()} questions={questions1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
         </Grid>
         <Grid item xs={12}>
           <Box>
             <Stack spacing={2} direction="row">
-                <Button variant="outlined" onClick={() => setPage(1)}>Voltar</Button>
-                <Button variant="contained" onClick={() => setPage(3)}>Enviar</Button>
+                <Button variant="contained" color="inherit" onClick={() => setPage(1)}>Voltar</Button>
+                <Button variant="contained" color="inherit" onClick={() => setPage(3)}>Próxima</Button>
             </Stack>
             
           </Box>
@@ -199,14 +232,38 @@ export default function Home() {
     );
   } else if (page === 3) {
     conteudo = (
-      <>  
+      <>
+        <Grid item xs={12}>
+          <Card sx={{ p: 2, backgroundColor: 'rgba(6,133, 244, 1)', color: 'white', marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
+            <Typography variant="h6">
+              Caracterização Sociográfica
+            </Typography>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          { questions2.map((q, k) => <QuestionCard key={k} question={q} setAnswer={(id, answer) => handleSetAnswers(id, answer)} />)}
+        </Grid>
+        <Grid item xs={12}>
+          <Box>
+            <Stack spacing={2} direction="row">
+                <Button variant="contained" color="inherit" onClick={() => setPage(2)}>Voltar</Button>
+                <Button variant="contained" color="primary" onClick={handleEnviar}>Enviar</Button>
+            </Stack>
+            
+          </Box>
+        </Grid>
+      </>
+    )
+  } else if (page === 4) {
+    conteudo = (
+      <>
         <Grid item xs={12} >
-          <Chart />
+          <Chart total={totalPerfis}/>
         </Grid>
         <Grid item xs={12}>
           <Box>
               <Stack spacing={2} direction="row">
-                <Button variant="outlined" onClick={() => setPage(2)}>Voltar</Button>
+                <Button variant="contained" color="inherit" onClick={() => setPage(2)}>Voltar</Button>
                 <Button variant="contained" onClick={() => setPage(1)}>Reiniciar</Button>
             </Stack>
           </Box>
@@ -223,7 +280,6 @@ export default function Home() {
         <Grid item xs={12} md={8} sx={{ mx: 'auto'}}>
           {conteudo}
         </Grid>
-        
       </Grid>
   )
 }

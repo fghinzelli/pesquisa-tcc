@@ -7,14 +7,6 @@ import styles from '../styles/Card.module.css';
 import { useState } from 'react';
 
 export default function QuestionCardRadioGrid(props) {
-
-    const radioOptions = [
-        'Quase sempre', 
-        'Muitas vezes',
-        'Poucas vezes',
-        'Quase nunca'
-    ];
-
     return (
         <Card className={styles.customCard} sx={{ p: 2, marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
             <CardContent>
@@ -23,7 +15,7 @@ export default function QuestionCardRadioGrid(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell></TableCell>
-                            { radioOptions.map((label, k) => <TableCell key={`label-${k}`}><strong>{ label }</strong></TableCell>)}
+                            { props.radioOptions.map((label, k) => <TableCell key={`label-${k}`}><strong>{ label }</strong></TableCell>)}
                         </TableRow>
                         
                     </TableHead>
@@ -36,7 +28,7 @@ export default function QuestionCardRadioGrid(props) {
                                         {question.title} <span style={{ color: 'red' }}>*</span>
                                     </Typography>
                                 </TableCell>
-                                <StateRadio options={radioOptions} question={question} setThisAnswer={(id, value) => props.setAnswer}/>
+                                <StateRadio options={props.radioOptions} question={question} setThisAnswer={(id, value) => props.setAnswer(id, value)}/>
                             </TableRow>
                         )})
                     }
