@@ -3,8 +3,9 @@ import QuestionCard from '../components/QuestionCard';
 import TextCard from '../components/TextCard';
 import QuestionCardRadioGrid from '../components/QuestionCardRadioGrid';
 import Chart from '../components/Chart';
-import { Grid, Button, Paper, Stack, Box, TextField, Card, CardContent, Typography }  from '@mui/material';
+import { Grid, Button, Stack, Box, Card, Typography }  from '@mui/material';
 import { useState } from 'react';
+import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -12,57 +13,80 @@ export default function Home() {
   const [totalPerfis, setTotalPerfis] = useState({})
   const [respostasPendentes, setRespostasPendentes] = useState(false);
 
+  const SPREADSHEET_ID = '114s6J8gvLiM5EVG_iLq94B7oBliy4JSz3PdCmIMDIkg';
+  const SHEET_ID = '1854561860';
+  const CLIENT_EMAIL = 'google-sheets-tcc-luciano@api-project-97132085860.iam.gserviceaccount.com';
+  const PRIVATE_KEY = '-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQCYaSJE9720dCOH\n1sC0R5CqWCGtf4mzRNIkJAfEnXClTr05mEZ6g2KWjuA+yNXSan+ARnTaULUdMYzG\nk0zhXhIgvVyXDh5wyN5ML+rHSvNm/3eejWyAhqIa0Ri4Xiw4insOvnSMY8PKRFYm\nXE8cP2VHMe/0LU17CDPGqau69YYc4+WIJEDt2b6R46XC9PYW/X5hhhJD4pDwzMD/\n7nALxCQ7s9RSmY4vicHRYMWUaXt7Nx3CNgM3TNhHbWTpBvakboycS9c4kqRL8hae\n68EGmUSm9uj1oeslaHhoJVJeqeaefycm80obdZT6SKBftxCn7klRskUFcm+5zvQd\n1opj5z/DAgMBAAECgf8zf1KU+yCeWJ+oxmdWgtfetuiqNu3QJPDcRVBantfxAyns\nzAcEXmBxftVGYZXeAx4RubzCB4Mq2hM3BY50l9SIO3ONlreyZCy4kXhC3pBfvPIu\nIJsI0nTzmrM/mJJYiHIMCU5YIV2GepChZY9VfBY8eCMb3jLP33WfKrVb9pnaKKDq\npcuTvdJX93qYIVizmhdhshJtftNt5XeTEaIKjCIpYvxVq8sRuXR1GVrAfNPG5yuU\nfkMeGCUJRbEYYoYBFLg+VErz1C9JrZ0TlW8g15EW3ZUtyNDBovFmHMZ7fPZDjzq/\nJ57CNDw0tHu6DIpinqW88ASm5c9bvFwkdcC70ZECgYEA103clsh0NfzadmCNuJn3\n++DHlb3joTdaeST5EtMezTQiadPCo/+gWuaSNxYkZ7AoruGtY59NT/q5qER2uI3H\nyuk6Ov62+M7YDjfXMGWnEHtXJnFCQjRif4HmV8Gw2Wf00gOX9CJ+cnFJj53SxUlC\n0j3HWpUki8kGa3yxA04T4VECgYEAtTf7kc37Si4UEZvKj1+ULjRtPIdGscwGkHNE\nqF0bNGBLbkefyOvKQWKCKk9icDxRLdFAlOhUlTsw16u8SMZvV60BObo87buoYeoy\nIQTAy09WvfJFCnxDiFUQlzArh0m2vsZ5U0T0MZlzaEQEDuTauJvOCrqKrG5tny+8\nxiRpatMCgYAB6/8BFY78AGLO1bPOJwmwpOQDMSu7/6t+E1dp1JqcyE9aVHqTTi/X\nP+GkPj1a85aZYQhUMFLXWOyZVOseYJ2c8RIE/ssRU39YOSVhmDayjfdML4yg3KjY\nbIdq1x7GAgiMa13K3xfz25EFiCoeerXu/IAwDc7CtKuq//Twi5zf0QKBgAw8WG8S\n0lnC3LYHp9igYnfwMEP6+kn89aCBN+yKRND3g4BRs7c0PHbHuPQ0YfgkCnMmgs7L\nFRLyaSzWuqLLSy9HTiLgsUZ3+jmKP5I9KOtRUxEGL6UymLi2zaT3qqi60Gz3J6/4\nouhKbSFoHkIHL8FxO6s7xys3VY1/Aqb6RGfjAoGAfcNSWYpAaN38YHjjLDQRiaFI\nHzj2vXl7W3pqxIgkPkEql7N3VJ6hXt5KIkLXb0QM/NaEe+VGJ8kptLFyRAHbx8t7\nYvMT096ly0xrpe7AM4SX0t0U74mrV77U/f7BsDnhGxI5fUVGeIhDtZrNnmDEvotr\nT78uB2tdxgFB3CJsMeg=\n-----END PRIVATE KEY-----\n';
+
+  const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+
+  const appendSpreadsheet = async (row) => {
+    try {
+      await doc.useServiceAccountAuth({
+        client_email: CLIENT_EMAIL,
+        private_key: PRIVATE_KEY,
+      });
+      // loads document properties and worksheets
+      await doc.loadInfo();
+  
+      const sheet = doc.sheetsById[SHEET_ID];
+      const result = await sheet.addRow(row);
+    } catch (e) {
+      console.error('Error: ', e);
+    }
+  };
+
   const questions1 = [
     { id: 1, title: '1. Evito demonstrar minhas emoções.'},
-    { id: 2, title: '2. Falo o que penso, mesmo que desagrade a outra parte.'},
-    { id: 3, title: '3. Detesto voltar atrás em tratativas já acordadas.'},
-    { id: 4, title: '4. Peço descontos nos processos realizados.'},
-    { id: 5, title: '5. Sou um negociador de pulso firme que demonstra autoridade.'},
-    { id: 6, title: '6. Entendo o processo de negociação como uma grande batalha muito competitiva.'},
-    { id: 7, title: '7. Pressiono as pessoas envolvidas para que busquem os resultados.'},
-    { id: 8, title: '8. Fico extremamente desconfortável quando não realizo um processo de compra com o objetivo inicial desejado.'},
-    { id: 9, title: '9. Sou exigente, nos processos de compra que participo.'},
-    { id: 10, title: '10. Na maioria das ocasiões evito realizar concessões.'},
-    { id: 11, title: '11. Sinto-me responsável por fazer os fornecedores da empresa "se sentirem bem", com a parceria realizada.'},
-    { id: 12, title: '12. Durante um processo de negociação, raramente utilizo a palavra NÃO.'},
-    { id: 13, title: '13. Tenho vergonha de pedir descontos, por diversos fatores.'},
-    { id: 14, title: '14. Prefiro ceder para evitar discussões nas rodadas de negociações.'},
-    { id: 15, title: '15. Quando não gosto de algo, tenho por característica não me manifestar.'},
-    { id: 16, title: '16. Geralmente espero que a outra parte perceba o que preciso sem ter que manifestar meu interesse.'},
-    { id: 17, title: '17. Evito negociar com representantes de vendas agressivos.'},
-    { id: 18, title: '18. Se tiver a oportunidade de me impor em uma reunião de negociação geralmente sou prestativo procurando favorecer a outra parte.'},
-    { id: 19, title: '19. Sou conciliador, procurando mais diálogo, para buscar entendimento.'},
-    { id: 20, title: '20. Tendo a concordar para evitar, conflitos.'},
-    { id: 21, title: '21. Necessito fazer as coisas o mais depressa possível e terminar de uma vez'},
-    { id: 22, title: '22 Em uma reunião de negociação exponho minhas ideias rapidamente a ponto da outra parte ter dificuldade em me entender.'},
-    { id: 23, title: '23. Sou impaciente, a compra deve ser fechada imediatamente.'},
-    { id: 24, title: '24. Tenho por hábito apressar os fornecedores para o fornecimento de orçamentos e retorno de negociações.'},
-    { id: 25, title: '25. Enquanto estou tratando de um processo de compras, já estou pensando no próximo que vem a seguir.'},
-    { id: 26, title: '26. Evito negociar com pessoas lentas.'},
-    { id: 27, title: '27. Faço as tarefas dos outros por não conseguir esperar que terminem.'},
-    { id: 28, title: '28. Não tenho paciência para longas negociações.'},
-    { id: 29, title: '29. Utilizo da estratégia de interromper a fala da outra parte para impor minha ideia.'},
-    { id: 30, title: '30. Quando realizo questionamentos, sobre minhas dúvidas, desejo que a resposta seja dada de forma imediata.'},
-    { id: 31, title: '31. Todos os processos que participo devem ser executados na maior perfeição.'},
-    { id: 32, title: '32. Entendo que todos os processos não devem ser realizados de forma simples'},
-    { id: 33, title: '33. Sou uma pessoa que se prepara bem e busca informações sobre o assunto, minunciosamente, antes de negociar.'},
-    { id: 34, title: '34. Mesmo que tenha tido êxito em uma negociação, penso que deveria ter feito melhor.'},
-    { id: 35, title: '35. As pessoas me veem como um profissional organizado.'},
-    { id: 36, title: '36. Prefiro que exista formalidade nas negociações.'},
-    { id: 37, title: '37. Não tolero os erros cometidos pelos outros.'},
-    { id: 38, title: '38.  Sempre exijo que os acordos sejam detalhados, contendo todas as informações pertinentes ao processo.'},
-    { id: 39, title: '39. A burocracia de um processo é importante para eficácia da negociação.'},
-    { id: 40, title: '40. Preocupo-me antes da negociação em saber os detalhes do produto, a ponto de realizar pesquisa prévia, solicitar catálogos, realizar visitas, etc.'},
-    { id: 41, title: '41. Sou persuasivo(a), procurando influenciar e impor minhas ideias conduzindo a negociação.'},
-    { id: 42, title: '42. Sou do tipo popular, uma pessoa empática, amável, de fácil convivência.'},
-    { id: 43, title: '43. Me defino como sendo uma pessoa criativa, com percepção tranquila e cheia de ideias.'},
-    { id: 44, title: '44. Sou otimista e acredito que no final tudo dá certo pois nada é impossível.'},
-    { id: 45, title: '45. Procuro manter um relacionamento próximo a amizade com foco em cooperação e simpatia com meus fornecedores.'},
-    { id: 46, title: '46. Sou comunicativo, costumo falar bastante expressando com facilidade as minhas ideias.'},
-    { id: 47, title: '47. Faço concessões para atender os objetivos.'},
-    { id: 48, title: '48. Procuro ser pouco detalhista, pois entendo que o resultado é o que importa.'},
-    { id: 49, title: '49. Na maioria das vezes procuro analisar o comportamento do representante de vendas para entender o seu objetivo.'},
-    { id: 50, title: '50. Procuro utilizar meu poder de convencimento pra impor minhas convicções e aquilo que acredito.'}
+    // { id: 2, title: '2. Falo o que penso, mesmo que desagrade a outra parte.'},
+    // { id: 3, title: '3. Detesto voltar atrás em tratativas já acordadas.'},
+    // { id: 4, title: '4. Peço descontos nos processos realizados.'},
+    // { id: 5, title: '5. Sou um negociador de pulso firme que demonstra autoridade.'},
+    // { id: 6, title: '6. Entendo o processo de negociação como uma grande batalha muito competitiva.'},
+    // { id: 7, title: '7. Pressiono as pessoas envolvidas para que busquem os resultados.'},
+    // { id: 8, title: '8. Fico extremamente desconfortável quando não realizo um processo de compra com o objetivo inicial desejado.'},
+    // { id: 9, title: '9. Sou exigente, nos processos de compra que participo.'},
+    // { id: 10, title: '10. Na maioria das ocasiões evito realizar concessões.'},
+    // { id: 11, title: '11. Sinto-me responsável por fazer os fornecedores da empresa "se sentirem bem", com a parceria realizada.'},
+    // { id: 12, title: '12. Durante um processo de negociação, raramente utilizo a palavra NÃO.'},
+    // { id: 13, title: '13. Tenho vergonha de pedir descontos, por diversos fatores.'},
+    // { id: 14, title: '14. Prefiro ceder para evitar discussões nas rodadas de negociações.'},
+    // { id: 15, title: '15. Quando não gosto de algo, tenho por característica não me manifestar.'},
+    // { id: 16, title: '16. Geralmente espero que a outra parte perceba o que preciso sem ter que manifestar meu interesse.'},
+    // { id: 17, title: '17. Evito negociar com representantes de vendas agressivos.'},
+    // { id: 18, title: '18. Se tiver a oportunidade de me impor em uma reunião de negociação geralmente sou prestativo procurando favorecer a outra parte.'},
+    // { id: 19, title: '19. Sou conciliador, procurando mais diálogo, para buscar entendimento.'},
+    // { id: 20, title: '20. Tendo a concordar para evitar, conflitos.'},
+    // { id: 21, title: '21. Necessito fazer as coisas o mais depressa possível e terminar de uma vez'},
+    // { id: 22, title: '22 Em uma reunião de negociação exponho minhas ideias rapidamente a ponto da outra parte ter dificuldade em me entender.'},
+    // { id: 23, title: '23. Sou impaciente, a compra deve ser fechada imediatamente.'},
+    // { id: 24, title: '24. Tenho por hábito apressar os fornecedores para o fornecimento de orçamentos e retorno de negociações.'},
+    // { id: 25, title: '25. Enquanto estou tratando de um processo de compras, já estou pensando no próximo que vem a seguir.'},
+    // { id: 26, title: '26. Evito negociar com pessoas lentas.'},
+    // { id: 27, title: '27. Faço as tarefas dos outros por não conseguir esperar que terminem.'},
+    // { id: 28, title: '28. Não tenho paciência para longas negociações.'},
+    // { id: 29, title: '29. Utilizo da estratégia de interromper a fala da outra parte para impor minha ideia.'},
+    // { id: 30, title: '30. Quando realizo questionamentos, sobre minhas dúvidas, desejo que a resposta seja dada de forma imediata.'},
+    // { id: 31, title: '31. Todos os processos que participo devem ser executados na maior perfeição.'},
+    // { id: 32, title: '32. Entendo que todos os processos não devem ser realizados de forma simples'},
+    // { id: 33, title: '33. Sou uma pessoa que se prepara bem e busca informações sobre o assunto, minunciosamente, antes de negociar.'},
+    // { id: 34, title: '34. Mesmo que tenha tido êxito em uma negociação, penso que deveria ter feito melhor.'},
+    // { id: 35, title: '35. As pessoas me veem como um profissional organizado.'},
+    // { id: 36, title: '36. Prefiro que exista formalidade nas negociações.'},
+    // { id: 37, title: '37. Não tolero os erros cometidos pelos outros.'},
+    // { id: 38, title: '38.  Sempre exijo que os acordos sejam detalhados, contendo todas as informações pertinentes ao processo.'},
+    // { id: 39, title: '39. A burocracia de um processo é importante para eficácia da negociação.'},
+    // { id: 40, title: '40. Preocupo-me antes da negociação em saber os detalhes do produto, a ponto de realizar pesquisa prévia, solicitar catálogos, realizar visitas, etc.'},
+    // { id: 41, title: '41. Sou persuasivo(a), procurando influenciar e impor minhas ideias conduzindo a negociação.'},
+    // { id: 42, title: '42. Sou do tipo popular, uma pessoa empática, amável, de fácil convivência.'},
+    // { id: 43, title: '43. Me defino como sendo uma pessoa criativa, com percepção tranquila e cheia de ideias.'},
+    // { id: 44, title: '44. Sou otimista e acredito que no final tudo dá certo pois nada é impossível.'},
+    // { id: 45, title: '45. Procuro manter um relacionamento próximo a amizade com foco em cooperação e simpatia com meus fornecedores.'},
+    // { id: 46, title: '46. Sou comunicativo, costumo falar bastante expressando com facilidade as minhas ideias.'},
+    // { id: 47, title: '47. Faço concessões para atender os objetivos.'},
+    // { id: 48, title: '48. Procuro ser pouco detalhista, pois entendo que o resultado é o que importa.'},
+    // { id: 49, title: '49. Na maioria das vezes procuro analisar o comportamento do representante de vendas para entender o seu objetivo.'},
+    // { id: 50, title: '50. Procuro utilizar meu poder de convencimento pra impor minhas convicções e aquilo que acredito.'}
   ];
 
   const questions2 = [
@@ -74,7 +98,8 @@ export default function Home() {
         {label: 'Feminino', value: 'feminino'},
         {label: 'Masculino', value: 'masculino'},
         {label: 'Outro', value: 'outro'}
-      ] 
+      ], 
+      mandatory: true
     },
     {
       id: 52,
@@ -85,7 +110,8 @@ export default function Home() {
         {label: '31 a 40 anos', value: '31 a 40 anos'},
         {label: '41 a 50 anos', value: '41 a 50 anos'},
         {label: 'acima de 61 anos', value: 'acima de 61 anos'}
-      ]
+      ],
+      mandatory: true
     },
     {
       id: 53,
@@ -96,7 +122,8 @@ export default function Home() {
         {label: 'Ensino médio', value: 'Ensino médio'},
         {label: 'Ensino Superior', value: 'Ensino Superior'},
         {label: 'Pós-Graduação', value: 'Pós-Graduação'}
-      ]
+      ],
+      mandatory: true
     },
     {
       id: 54,
@@ -108,7 +135,8 @@ export default function Home() {
         {label: '50 a 99', value: '50 a 99'},
         {label: '100 a 499', value: '100 a 499'},
         {label: '500 ou mais', value: '500 ou mais'}
-      ]
+      ],
+      mandatory: true
     },
     {
       id: 55,
@@ -120,17 +148,20 @@ export default function Home() {
         {label: 'Comércio', value: 'Comércio'},
         {label: 'Construção civil', value: 'Construção civil'},
         {label: 'Agronegócio', value: 'Agronegócio'}
-      ]
+      ],
+      mandatory: true
     },
     {
       id: 56,
       title: 'Em qual município localiza-se a empresa em qual trabalha?',
-      type: 'text'
+      type: 'text',
+      mandatory: true
     },
     {
       id: 57,
       title: 'Caso deseje receber o resultado desta pesquisa, informe seu e-mail abaixo:',
-      type: 'text'
+      type: 'text',
+      mandatory: false
     }
   ]
 
@@ -140,6 +171,11 @@ export default function Home() {
     'Muitas vezes',
     'Quase sempre'
 ];
+
+  const handleSetPage = page => {
+    setPage(page);
+    window.scrollTo(0, 0)
+  }
 
   const handleSetAnswers = (idAnswer, theAnswer) => {
     setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
@@ -153,14 +189,29 @@ export default function Home() {
           return total + 1;
         }
       }, 0)
-      if (countAnswers === 50) {
-        setRespostasPendentes(false)
-        setPage(3)
+      if (countAnswers === 1) {
+        setRespostasPendentes(false);
+        handleSetPage(3);
       } else {
-        setRespostasPendentes(true)
+        setRespostasPendentes(true);
       }
+    } else if (page === 3) {
       
-    }
+      countAnswers = answers.reduce((total, item) => {
+        if (item.id > 50 && item.id < 60) {
+          return total + 1;
+        } else {
+          return total;
+        }
+      }, 0)
+      console.log(countAnswers)
+      if (countAnswers >= 6) {
+        setRespostasPendentes(false);
+        handleEnviar();
+      } else {
+        setRespostasPendentes(true);
+      }
+    } 
   }
 
   const handleEnviar = () => {
@@ -186,14 +237,21 @@ export default function Home() {
       }
     });
     setTotalPerfis(perfis);
-    setPage(4)
+    let labelQuestions = {};
+    questions1.forEach(q => labelQuestions[q.id] = q.title);
+    questions2.forEach(q => labelQuestions[q.id] = q.title);
+    let newRow = answers.map(answer => { 
+      return {Name: labelQuestions[answer.id], Value: answer.answer }
+    })
+    appendSpreadsheet(newRow);
+    handleSetPage(4)
   }
 
   const handleReiniciar = () => {
     setRespostasPendentes(false);
     setTotalPerfis({})
     setAnswers([]);
-    setPage(1)
+    handleSetPage(1)
   }
 
   let conteudo = null;
@@ -221,7 +279,7 @@ export default function Home() {
         <Grid item xs={12}>
           <Box sx={{ mx: 'auto' }}>
             <Stack spacing={2} direction="row">
-              <Button variant="contained" color="inherit" onClick={() => setPage(2)}>Próxima</Button>
+              <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Próxima</Button>
             </Stack>
           </Box>
         </Grid>
@@ -243,7 +301,7 @@ export default function Home() {
         <Grid item xs={12}>
           <Box>
             <Stack spacing={2} direction="row">
-                <Button variant="contained" color="inherit" onClick={() => setPage(1)}>Voltar</Button>
+                {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(1)}>Voltar</Button> */}
                 <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
             </Stack>
             
@@ -262,13 +320,13 @@ export default function Home() {
           </Card>
         </Grid>
         <Grid item xs={12}>
-          { questions2.map((q, k) => <QuestionCard key={k} question={q} setAnswer={(id, answer) => handleSetAnswers(id, answer)} />)}
+          { questions2.map((q, k) => <QuestionCard camposPendentes={respostasPendentes} key={k} question={q} setAnswer={(id, answer) => handleSetAnswers(id, answer)} />)}
         </Grid>
         <Grid item xs={12}>
           <Box>
             <Stack spacing={2} direction="row">
-                <Button variant="contained" color="inherit" onClick={() => setPage(2)}>Voltar</Button>
-                <Button variant="contained" color="primary" onClick={handleEnviar}>Enviar</Button>
+                {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Voltar</Button> */}
+                <Button variant="contained" color="primary" onClick={handleValidacao}>Enviar</Button>
             </Stack>
             
           </Box>
@@ -284,8 +342,8 @@ export default function Home() {
         <Grid item xs={12}>
           <Box>
               <Stack spacing={2} direction="row">
-                <Button variant="contained" color="inherit" onClick={() => setPage(3)}>Voltar</Button>
-                <Button variant="contained" onClick={handleReiniciar}>Reiniciar</Button>
+                {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(3)}>Voltar</Button> */}
+                <Button variant="contained" onClick={handleReiniciar}>Refazer teste</Button>
             </Stack>
           </Box>
         </Grid>
