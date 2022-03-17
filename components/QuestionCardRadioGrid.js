@@ -1,16 +1,18 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { FormControlLabel, List, ListItem, Radio, RadioGroup, TableHead } from '@mui/material';
+import { Radio, TableHead } from '@mui/material';
 import { TableContainer, Table, TableBody, TableRow, TableCell } from '@mui/material';
 import styles from '../styles/Card.module.css';
 import { useState } from 'react';
+import { ErrorOutline } from '@mui/icons-material'
 
 export default function QuestionCardRadioGrid(props) {
+    
     return (
         <Card className={styles.customCard} sx={{ p: 2, marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
             <CardContent>
-                <TableContainer sx={{ maxHeight: 500 }}>
+                <TableContainer>
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
@@ -22,14 +24,7 @@ export default function QuestionCardRadioGrid(props) {
                     <TableBody>
                     {props.questions.map((question, k) => {
                         return (
-                            <TableRow style ={ k % 2 ? { background : "#f3f3f3" }:{ background : "white" }} key={`row-${k}`}>
-                                <TableCell>
-                                    <Typography  sx={{ fontSize: '16px' }}>
-                                        {question.title} <span style={{ color: 'red' }}>*</span>
-                                    </Typography>
-                                </TableCell>
-                                <StateRadio options={props.radioOptions} question={question} setThisAnswer={(id, value) => props.setAnswer(id, value)}/>
-                            </TableRow>
+                            <StateRow camposPendentes={props.camposPendentes} key={k} options={props.radioOptions} question={question} setThisAnswer={(id, value) => props.setAnswer(id, value)}/>
                         )})
                     }
                     </TableBody>
@@ -40,7 +35,7 @@ export default function QuestionCardRadioGrid(props) {
     );
 }
 
-const StateRadio = (props) => {
+const StateRow = (props) => {
     const [selectedValue, setSelectedValue] = useState(''); 
 
     const handleChange = (id, value) => {
@@ -49,17 +44,29 @@ const StateRadio = (props) => {
     }
 
     return (
-        props.options.map((item, k) => {
-            return (
-                <TableCell key={k}>
-                    <Radio 
-                        checked={selectedValue === item}
-                        onChange={() => handleChange(props.question.id, item)}
-                        name={`question${props.question.id}`} 
-                        value={item} 
-                        />
-                </TableCell>
-            )
-        })
+        <TableRow style ={ props.camposPendentes && !selectedValue ? {background : "#ffc7c7"} : (props.question.id % 2 ? { background : "#f3f3f3" }:{ background : "white" })} key={`row-${props.question.id}`}>
+            <TableCell>
+                <Typography sx={{ fontSize: '16px' }}>
+                    {props.question.title} <span style={{ color: 'red' }}>*</span>
+                </Typography>
+                { props.camposPendentes && !selectedValue ? 
+                    <Typography variant="caption" sx={{ color: 'red', display: 'inline-flex', p: 1}}>
+                        <ErrorOutline fontSize="small"/>&nbsp; Esta pergunta é obrigatória
+                    </Typography> : null
+                }
+            </TableCell>
+            { props.options.map((item, k) => {
+                return (
+                    <TableCell key={k}>
+                        <Radio 
+                            checked={selectedValue === item}
+                            onChange={() => handleChange(props.question.id, item)}
+                            name={`question${props.question.id}`} 
+                            value={item} 
+                            />
+                    </TableCell>
+                )
+            })}
+        </TableRow>
     )
 }

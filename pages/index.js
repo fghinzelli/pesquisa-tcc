@@ -10,6 +10,7 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [answers, setAnswers] = useState([])
   const [totalPerfis, setTotalPerfis] = useState({})
+  const [respostasPendentes, setRespostasPendentes] = useState(false);
 
   const questions1 = [
     { id: 1, title: '1. Evito demonstrar minhas emoções.'},
@@ -144,14 +145,28 @@ export default function Home() {
     setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
   }
 
-  const handleValidacao = (nextPage) => {
-
+  const handleValidacao = () => {
+    let countAnswers = 0;
+    if (page === 2) {
+      countAnswers = answers.reduce((total, item) => {
+        if (item.id <= 50) {
+          return total + 1;
+        }
+      }, 0)
+      if (countAnswers === 50) {
+        setRespostasPendentes(false)
+        setPage(3)
+      } else {
+        setRespostasPendentes(true)
+      }
+      
+    }
   }
 
   const handleEnviar = () => {
     let perfis = {
       competitivo: 0,
-      cooperativo: 0,
+      cooperante: 0,
       impaciente: 0,
       perfeccionista: 0,
       sedutor: 0
@@ -170,9 +185,15 @@ export default function Home() {
         perfis.sedutor += contador;
       }
     });
-    console.log(perfis)
     setTotalPerfis(perfis);
     setPage(4)
+  }
+
+  const handleReiniciar = () => {
+    setRespostasPendentes(false);
+    setTotalPerfis({})
+    setAnswers([]);
+    setPage(1)
   }
 
   let conteudo = null;
@@ -217,13 +238,13 @@ export default function Home() {
           </TextCard>
         </Grid>
         <Grid item xs={12}>
-          <QuestionCardRadioGrid radioOptions={radioOptions.reverse()} questions={questions1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
+          <QuestionCardRadioGrid camposPendentes={respostasPendentes} radioOptions={radioOptions.reverse()} questions={questions1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
         </Grid>
         <Grid item xs={12}>
           <Box>
             <Stack spacing={2} direction="row">
                 <Button variant="contained" color="inherit" onClick={() => setPage(1)}>Voltar</Button>
-                <Button variant="contained" color="inherit" onClick={() => setPage(3)}>Próxima</Button>
+                <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
             </Stack>
             
           </Box>
@@ -263,8 +284,8 @@ export default function Home() {
         <Grid item xs={12}>
           <Box>
               <Stack spacing={2} direction="row">
-                <Button variant="contained" color="inherit" onClick={() => setPage(2)}>Voltar</Button>
-                <Button variant="contained" onClick={() => setPage(1)}>Reiniciar</Button>
+                <Button variant="contained" color="inherit" onClick={() => setPage(3)}>Voltar</Button>
+                <Button variant="contained" onClick={handleReiniciar}>Reiniciar</Button>
             </Stack>
           </Box>
         </Grid>
