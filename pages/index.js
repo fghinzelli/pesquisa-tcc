@@ -165,7 +165,7 @@ export default function Home() {
           return total + 1;
         }
       }, 0)
-      if (countAnswers === 1) {
+      if (countAnswers === 50) {
         setRespostasPendentes(false);
         handleSetPage(3);
       } else {
