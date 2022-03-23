@@ -3,7 +3,7 @@ import QuestionCard from '../components/QuestionCard';
 import TextCard from '../components/TextCard';
 import QuestionCardRadioGrid from '../components/QuestionCardRadioGrid';
 import Chart from '../components/Chart';
-import { Grid, Button, Stack, Box, Card, Typography }  from '@mui/material';
+import { Grid, Button, Stack, Box, Card, Typography, Alert }  from '@mui/material';
 import { useState } from 'react';
 
 export default function Home() {
@@ -129,7 +129,7 @@ export default function Home() {
     },
     {
       id: 56,
-      title: 'Em qual município localiza-se a empresa em qual trabalha?',
+      title: 'Em qual município localiza-se a empresa em que trabalha?',
       type: 'text',
       mandatory: true
     },
@@ -219,7 +219,8 @@ export default function Home() {
     answers.forEach(answer => { 
       return newRow[labelQuestions[answer.id]] = answer.answer
     })
-    newRow['Carimbo de data/hora'] = '01/01/2022 01:01:00'
+    let now = new Date();
+    newRow['Carimbo de data/hora'] = now.toLocaleString('pt-BR')
     fetch('/api/sheets', {
       method: "POST",
       body: JSON.stringify(newRow)
@@ -270,7 +271,7 @@ export default function Home() {
         <Grid item xs={12}>
           <Box sx={{ mx: 'auto' }}>
             <Stack spacing={2} direction="row">
-              <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Próxima</Button>
+              <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Iniciar</Button>
             </Stack>
           </Box>
         </Grid>
@@ -291,6 +292,7 @@ export default function Home() {
         </Grid>
         <Grid item xs={12}>
           <Box>
+            {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
             <Stack spacing={2} direction="row">
                 {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(1)}>Voltar</Button> */}
                 <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
@@ -315,6 +317,7 @@ export default function Home() {
         </Grid>
         <Grid item xs={12}>
           <Box>
+            {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
             <Stack spacing={2} direction="row">
                 {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Voltar</Button> */}
                 <Button variant="contained" color="primary" onClick={handleValidacao}>Enviar</Button>

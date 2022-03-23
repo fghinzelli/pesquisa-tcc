@@ -24,7 +24,9 @@ const appendSpreadsheet = async (row) => {
 export default (req, res) => {
   /* add new Row data */
   if (req.method === 'POST') {
-    const newRow = req.body;
+    // const newRow = req.body;
+  
+    const newRow = JSON.parse(req.body)
     appendSpreadsheet(newRow)
     res.statusCode = 201
     res.json({
