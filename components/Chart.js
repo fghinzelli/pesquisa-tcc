@@ -92,7 +92,7 @@ export default function Chart(props) {
                     {perfil.name}
                   </Typography>
                   <Typography variant="body1" sx={{ textAlign: 'center', backgroundColor: 'rgba(25, 118, 210, 0.8)', color: 'white', p: 1}} component='div'>
-                    {`${pontuacao(props.total[perfil.name])} (${props.total[perfil.name]})`}
+                    {`${pontuacao(props.total[perfil.name])}`}
                   </Typography>
                   <Typography variant="body2" sx={{ p: 1}}>
                   {perfil.description}

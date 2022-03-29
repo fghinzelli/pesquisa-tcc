@@ -66,8 +66,19 @@ export default function Home() {
   ];
 
   const questions2 = [
+    { id: 51, title: '51. A satisfação de ambos as partes é o objetivo principal, ou seja, todos podem obter vantagens e saírem ganhando.'},
+    { id: 52, title: '52. O melhor resultado financeiro possível é a meta, visando alcançar apenas os objetivos propostos pela empresa.'},
+    { id: 53, title: '53. A prioridade na negociação é manter um relacionamento de mercado com o fornecedor, não levando em consideração outros fatores, como o financeiro, por exemplo.'},
+    { id: 54, title: '54. Mostrar-se indiferente ou até mesmo retirar-se, quando uma negociação não oportuniza resultados mútuos é uma estratégia a ser adotada.'},
+    { id: 55, title: '55. Com criatividade e comportamento proativo resolvo os problemas de forma imediata.'},
+    { id: 56, title: '56. Procuro estar bem preparado, sendo entusiasta, em permanente alerta e atuar sobre pressão é o que me motiva.'},
+    { id: 57, title: '57. Realizar concessões, por vezes renunciando parte dos objetivos para fechar um acordo, é uma estratégia comum frequentemente adotada.'},
+    { id: 58, title: '58. Boas práticas de compliance, de modo a assegurar processos lícitos e éticos, é um procedimento a ser respeitado, mesmo que venha a gerar perdas para a empresa.'}
+  ]
+
+  const qPerfilSociografico = [
     {
-      id: 51,
+      id: 59,
       title: 'Gênero',
       type: 'radio',
       options: [
@@ -78,7 +89,7 @@ export default function Home() {
       mandatory: true
     },
     {
-      id: 52,
+      id: 60,
       title: 'Idade',
       type: 'radio',
       options: [
@@ -90,7 +101,7 @@ export default function Home() {
       mandatory: true
     },
     {
-      id: 53,
+      id: 61,
       title: 'Escolaridade',
       type: 'radio',
       options: [
@@ -102,7 +113,7 @@ export default function Home() {
       mandatory: true
     },
     {
-      id: 54,
+      id: 62,
       title: 'Qual é o número de funcionários da empresa que atua?',
       type: 'radio',
       options: [
@@ -115,7 +126,7 @@ export default function Home() {
       mandatory: true
     },
     {
-      id: 55,
+      id: 63,
       title: 'Qual é o setor da empresa?',
       type: 'radio',
       options: [
@@ -128,13 +139,13 @@ export default function Home() {
       mandatory: true
     },
     {
-      id: 56,
+      id: 64,
       title: 'Em qual município localiza-se a empresa em que trabalha?',
       type: 'text',
       mandatory: true
     },
     {
-      id: 57,
+      id: 65,
       title: 'Caso deseje receber o resultado desta pesquisa, informe seu e-mail abaixo:',
       type: 'text',
       mandatory: false
@@ -172,9 +183,22 @@ export default function Home() {
         setRespostasPendentes(true);
       }
     } else if (page === 3) {
-      
       countAnswers = answers.reduce((total, item) => {
-        if (item.id > 50 && item.id < 60) {
+        if (item.id > 50 && item.id < 59) {
+          return total + 1;
+        } else {
+          return total;
+        }
+      }, 0)
+      if (countAnswers >= 8) {
+        setRespostasPendentes(false);
+        handleSetPage(4);
+      } else {
+        setRespostasPendentes(true);
+      }
+    } else if (page === 4) {
+      countAnswers = answers.reduce((total, item) => {
+        if (item.id > 58) {
           return total + 1;
         } else {
           return total;
@@ -186,7 +210,7 @@ export default function Home() {
       } else {
         setRespostasPendentes(true);
       }
-    } 
+    }
   }
 
   const handleEnviar = () => {
@@ -215,6 +239,7 @@ export default function Home() {
     let labelQuestions = {};
     questions1.forEach(q => labelQuestions[q.id] = q.title);
     questions2.forEach(q => labelQuestions[q.id] = q.title);
+    qPerfilSociografico.forEach(q => labelQuestions[q.id] = q.title);
     let newRow = {}
     answers.forEach(answer => { 
       return newRow[labelQuestions[answer.id]] = answer.answer
@@ -231,7 +256,7 @@ export default function Home() {
     .then( data => {
       console.log('Resposta gravada com sucesso!');
       console.log(data.data)
-      handleSetPage(4);
+      handleSetPage(5);
     })
     .catch (error => {
       console.log('Erro ao gravar os dados', error)
@@ -248,101 +273,137 @@ export default function Home() {
 
   let conteudo = null;
 
-  if (page === 1) {
-    conteudo = (
-      <>
-        <Grid item xs={12} >
-          <TextCard>
-              Prezado (a) Senhor (a):<br/>
-              A presente pesquisa está sendo desenvolvida pelo acadêmico LUCIANO GHINZELLI, sendo requisito parcial à obtenção do título de Bacharel em Administração pela Universidade de Caxias do Sul – CAMPUS SEDE. 
-              Essa pesquisa tem como objetivo principal identificar o perfil  de personalidade predominante dos  profissionais de negociação da área de compras, de empresas localizadas na Região Metropolitana da Serra Gaúcha. 
-              Todas as informações aqui fornecidas serão tratadas de forma confidencial, tendo utilidade apenas para este trabalho, não sendo divulgadas informações de cunho pessoal como também de empresas. 
-              O resultado desta pesquisa, em seu contexto generalizado poderá contribuir no desenvolvimento da atividade dos profissionais da área de compras da região,  como ferramenta para a maximização de resultados. 
-              Desde já agradeço sua compreensão e colaboração. <br/>
-              <br/>
-              Atenciosamente, <br/>
-              <br/>
-              Luciano Ghinzelli<br/>
-              Acadêmico de Administração de Empresas<br/>
-              Comprador<br/>
-
-          </TextCard>
-        </Grid> 
-        <Grid item xs={12}>
-          <Box sx={{ mx: 'auto' }}>
-            <Stack spacing={2} direction="row">
-              <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Iniciar</Button>
-            </Stack>
-          </Box>
-        </Grid>
-      </>
-    )
-  } else if (page === 2) {
-    conteudo = (
-      <>
-        <Grid item xs={12} >
-          <TextCard>
-            Levando em consideração, em uma escala, marque a opção que você considera mais adequada para as afirmações que seguem, 
-            que podem lhe caracterizar seu perfil nas situações que envolvem um processo de negociação com os fornecedores de sua empresa.
-
-          </TextCard>
-        </Grid>
-        <Grid item xs={12}>
-          <QuestionCardRadioGrid camposPendentes={respostasPendentes} radioOptions={radioOptions.reverse()} questions={questions1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
-        </Grid>
-        <Grid item xs={12}>
-          <Box>
-            {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
-            <Stack spacing={2} direction="row">
-                {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(1)}>Voltar</Button> */}
-                <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
-            </Stack>
-            
-          </Box>
-        </Grid>
-      </>
-    );
-  } else if (page === 3) {
-    conteudo = (
-      <>
-        <Grid item xs={12}>
-          <Card sx={{ p: 2, backgroundColor: 'rgba(6,133, 244, 1)', color: 'white', marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
-            <Typography variant="h6">
-              Caracterização Sociográfica
-            </Typography>
-          </Card>
-        </Grid>
-        <Grid item xs={12}>
-          { questions2.map((q, k) => <QuestionCard camposPendentes={respostasPendentes} key={k} question={q} setAnswer={(id, answer) => handleSetAnswers(id, answer)} />)}
-        </Grid>
-        <Grid item xs={12}>
-          <Box>
-            {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
-            <Stack spacing={2} direction="row">
-                {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Voltar</Button> */}
-                <Button variant="contained" color="primary" onClick={handleValidacao}>Enviar</Button>
-            </Stack>
-            
-          </Box>
-        </Grid>
-      </>
-    )
-  } else if (page === 4) {
-    conteudo = (
-      <>
-        <Grid item xs={12} >
-          <Chart total={totalPerfis}/>
-        </Grid>
-        <Grid item xs={12}>
-          <Box>
+  switch (page) {
+    case 1:
+      conteudo = (
+        <>
+          <Grid item xs={12} >
+            <TextCard>
+                Prezado (a) Senhor (a):<br/>
+                A presente pesquisa está sendo desenvolvida pelo acadêmico LUCIANO GHINZELLI, sendo requisito parcial à obtenção do título de Bacharel em Administração pela Universidade de Caxias do Sul – CAMPUS SEDE. 
+                Essa pesquisa tem como objetivo principal identificar o perfil  de personalidade predominante dos  profissionais de negociação da área de compras, de empresas localizadas na Região Metropolitana da Serra Gaúcha. 
+                Todas as informações aqui fornecidas serão tratadas de forma confidencial, tendo utilidade apenas para este trabalho, não sendo divulgadas informações de cunho pessoal como também de empresas. 
+                O resultado desta pesquisa, em seu contexto generalizado poderá contribuir no desenvolvimento da atividade dos profissionais da área de compras da região,  como ferramenta para a maximização de resultados. 
+                Desde já agradeço sua compreensão e colaboração. <br/>
+                <br/>
+                Atenciosamente, <br/>
+                <br/>
+                Luciano Ghinzelli<br/>
+                Acadêmico de Administração de Empresas | Comprador<br/>
+                (54) 999849149 | luciano.ghinzelli@gmail.com<br/>
+  
+            </TextCard>
+          </Grid> 
+          <Grid item xs={12}>
+            <Box sx={{ mx: 'auto' }}>
               <Stack spacing={2} direction="row">
-                {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(3)}>Voltar</Button> */}
-                <Button variant="contained" onClick={handleReiniciar}>Refazer teste</Button>
-            </Stack>
-          </Box>
-        </Grid>
-      </>
-    )
+                <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Iniciar</Button>
+              </Stack>
+            </Box>
+          </Grid>
+        </>
+      );
+      break;
+    case 2:
+      conteudo = (
+        <>
+          <Grid item xs={12} >
+            <TextCard>
+              Levando em consideração, em uma escala, marque a opção que você considera mais adequada para as afirmações que seguem, 
+              que podem lhe caracterizar seu perfil nas situações que envolvem um processo de negociação com os fornecedores de sua empresa.
+            </TextCard>
+          </Grid>
+          <Grid item xs={12}>
+            <QuestionCardRadioGrid camposPendentes={respostasPendentes} radioOptions={radioOptions.reverse()} questions={questions1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
+          </Grid>
+          <Grid item xs={12}>
+            <Box>
+              {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
+              <Stack spacing={2} direction="row">
+                  <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
+              </Stack>
+              
+            </Box>
+          </Grid>
+        </>
+      );
+      break;
+    case 3:
+      conteudo = (
+        <>
+          <Grid item xs={12} >
+            <TextCard>
+            Nesta parte, sobre as estratégias de negociação, analise as situações a seguir optando pela opção que melhor lhe define:
+            </TextCard>
+          </Grid>
+          <Grid item xs={12}>
+            <QuestionCardRadioGrid camposPendentes={respostasPendentes} radioOptions={radioOptions.reverse()} questions={questions2} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
+          </Grid>
+          <Grid item xs={12}>
+            <Box>
+              {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
+              <Stack spacing={2} direction="row">
+                  <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
+              </Stack>
+              
+            </Box>
+          </Grid>
+        </>
+      );
+      break;
+    case 4:
+      conteudo = (
+        <>
+          <Grid item xs={12}>
+            <Card sx={{ p: 2, backgroundColor: 'rgba(6,133, 244, 1)', color: 'white', marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
+              <Typography variant="h6">
+                Caracterização Sociográfica
+              </Typography>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            { qPerfilSociografico.map((q, k) => <QuestionCard camposPendentes={respostasPendentes} key={k} question={q} setAnswer={(id, answer) => handleSetAnswers(id, answer)} />)}
+          </Grid>
+          <Grid item xs={12}>
+            <Box>
+              {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
+              <Stack spacing={2} direction="row">
+                  <Button variant="contained" color="primary" onClick={handleValidacao}>Enviar</Button>
+              </Stack>
+              
+            </Box>
+          </Grid>
+        </>
+      )
+      break;
+    case 5:
+      conteudo = (
+        <>
+          <Grid item xs={12} >
+            <Chart total={totalPerfis}/>
+          </Grid>
+          <Grid item xs={12}>
+            <Box>
+                <Stack spacing={2} direction="row">
+                  {/* <Button variant="contained" color="inherit" onClick={() => handleSetPage(3)}>Voltar</Button> */}
+                  <Button variant="contained" onClick={handleReiniciar}>Refazer teste</Button>
+              </Stack>
+            </Box>
+          </Grid>
+        </>
+      )
+      break;
+    default:
+      break;
+  }
+  if (page === 1) {
+    
+  } else if (page === 2) {
+    
+  } else if (page === 3) {
+    
+  } else if (page === 4) {
+    
   }
 
   return (

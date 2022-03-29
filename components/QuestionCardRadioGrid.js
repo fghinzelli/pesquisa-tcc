@@ -57,7 +57,7 @@ const StateRow = (props) => {
             </TableCell>
             { props.options.map((item, k) => {
                 return (
-                    <TableCell key={k}>
+                    <TableCell key={`${props.question.id}${k}`}>
                         <Radio 
                             checked={selectedValue === item}
                             onChange={() => handleChange(props.question.id, item)}
