@@ -21,7 +21,7 @@ export default function Home() {
   }
 
   const handleSetAnswers = (idAnswer, theAnswer) => {
-    setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
+    // setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
   }
 
   const handleValidacao = () => {

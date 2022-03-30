@@ -22,11 +22,11 @@ export default function QuestionCardRadioGrid(props) {
                         
                     </TableHead>
                     <TableBody>
-                    {props.questions.map((question, k) => {
+                    {props.questions.map((question) => {
                         return (
                             <StateRow 
                                 camposPendentes={props.camposPendentes} 
-                                key={`question${question.id}${k}`} 
+                                key={question.id} 
                                 options={props.radioOptions} 
                                 question={question} 
                                 setThisAnswer={(id, value) => props.setAnswer(id, value)}/>
@@ -62,7 +62,7 @@ const StateRow = (props) => {
             </TableCell>
             { props.options.map((item, k) => {
                 return (
-                    <TableCell key={`option${props.question.id}${k}`}>
+                    <TableCell key={`${props.question.id}-${k}`}>
                         <Radio 
                             checked={selectedValue === item}
                             onChange={() => handleChange(props.question.id, item)}
