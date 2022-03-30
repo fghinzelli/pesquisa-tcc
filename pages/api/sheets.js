@@ -28,7 +28,6 @@ export default (req, res) => {
   
   if (req.method === 'POST') {
     const newRow = JSON.parse(req.body)
-
     appendSpreadsheet(newRow)
     res.statusCode = 201
     res.json({
