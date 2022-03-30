@@ -13,6 +13,7 @@ export default function Home() {
   const [totalPerfis, setTotalPerfis] = useState({})
   const [respostasPendentes, setRespostasPendentes] = useState(false);
   const [loading, setLoading] = useState(false);
+  const optionsRadio = radioOpt.reverse();
 
   const handleSetPage = page => {
     setPage(page);
@@ -172,7 +173,7 @@ export default function Home() {
           <Grid item xs={12}>
             <QuestionCardRadioGrid 
               camposPendentes={respostasPendentes} 
-              radioOptions={radioOpt.reverse()} 
+              radioOptions={optionsRadio} 
               questions={questions.session1} 
               setAnswer={(id, answer) => handleSetAnswers(id, answer)}
             />
@@ -200,7 +201,7 @@ export default function Home() {
           <Grid item xs={12}>
             <QuestionCardRadioGrid 
               camposPendentes={respostasPendentes} 
-              radioOptions={radioOpt.reverse()} 
+              radioOptions={optionsRadio} 
               questions={questions.session2} 
               setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
           </Grid>
