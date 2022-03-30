@@ -122,8 +122,8 @@ export default function Home() {
       return response.json()
     })
     .then( data => {
-      // console.log('Resposta gravada com sucesso!');
-      // console.log(data.data)
+      console.log('Resposta gravada com sucesso!');
+      console.log(data.data)
       setLoading(false);
       handleSetPage(5);
     })
