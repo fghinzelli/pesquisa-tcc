@@ -141,7 +141,7 @@ export const questions = {
   ]
 }
 
-export const radioOptions = [
+export const radioOpt = [
     'Quase nunca',
     'Poucas vezes',
     'Muitas vezes',

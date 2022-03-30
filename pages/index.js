@@ -3,9 +3,9 @@ import QuestionCard from '../components/QuestionCard';
 import TextCard from '../components/TextCard';
 import QuestionCardRadioGrid from '../components/QuestionCardRadioGrid';
 import Chart from '../components/Chart';
-import { Grid, Button, Stack, Box, Card, Typography, Alert, Skeleton, CircularProgress }  from '@mui/material';
+import { Grid, Button, Stack, Box, Card, Typography, Alert, CircularProgress }  from '@mui/material';
 import { useState } from 'react';
-import { questions, radioOptions } from '../config/questions';
+import { questions, radioOpt } from '../config/questions';
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -77,7 +77,7 @@ export default function Home() {
       sedutor: 0
     }
     answers.forEach(answer => {
-      let contador = radioOptions.indexOf(answer.answer);
+      let contador = radioOpt.indexOf(answer.answer);
       if (answer.id <= 10) {
         perfis.competitivo += contador;
       } else if (answer.id <= 20) {
@@ -170,7 +170,12 @@ export default function Home() {
             </TextCard>
           </Grid>
           <Grid item xs={12}>
-            <QuestionCardRadioGrid camposPendentes={respostasPendentes} radioOptions={radioOptions.reverse()} questions={questions.session1} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
+            <QuestionCardRadioGrid 
+              camposPendentes={respostasPendentes} 
+              radioOptions={radioOpt.reverse()} 
+              questions={questions.session1} 
+              setAnswer={(id, answer) => handleSetAnswers(id, answer)}
+            />
           </Grid>
           <Grid item xs={12}>
             <Box>
@@ -193,7 +198,11 @@ export default function Home() {
             </TextCard>
           </Grid>
           <Grid item xs={12}>
-            <QuestionCardRadioGrid camposPendentes={respostasPendentes} radioOptions={radioOptions.reverse()} questions={questions.session2} setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
+            <QuestionCardRadioGrid 
+              camposPendentes={respostasPendentes} 
+              radioOptions={radioOpt.reverse()} 
+              questions={questions.session2} 
+              setAnswer={(id, answer) => handleSetAnswers(id, answer)}/>
           </Grid>
           <Grid item xs={12}>
             <Box>
