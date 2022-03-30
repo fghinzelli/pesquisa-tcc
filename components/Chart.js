@@ -61,8 +61,11 @@ export default function Chart(props) {
       <>
         <Card className={styles.customCard} sx={{ marginBottom: '16px', borderRadius: '8px', mx: 'auto'}}>
             <CardContent>
-                <Typography variant="h5" sx={{ textAlign: 'center'}}>
-                    Resultado
+                <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: '16px'}}>
+                  Muito obrigado pela sua participação!
+                </Typography>
+                <Typography variant="body1" sx={{ textAlign: 'center'}}>
+                  Veja abaixo o resultado obtido a partir de suas respostas:
                 </Typography>
                 <ResponsiveContainer width='100%' height={400}>
                   <RadarChart
