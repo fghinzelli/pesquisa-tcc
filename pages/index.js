@@ -5,7 +5,7 @@ import QuestionCardRadioGrid from '../components/QuestionCardRadioGrid';
 import Chart from '../components/Chart';
 import { Grid, Button, Stack, Box, Card, Typography, Alert, CircularProgress }  from '@mui/material';
 import { useState } from 'react';
-import { questions, radioOpt } from '../config/questions';
+import { questions } from '../config/questions';
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -13,12 +13,25 @@ export default function Home() {
   const [totalPerfis, setTotalPerfis] = useState({})
   const [respostasPendentes, setRespostasPendentes] = useState(false);
   const [loading, setLoading] = useState(false);
-  const optionsRadio = radioOpt.reverse();
 
   const handleSetPage = page => {
     setPage(page);
     window.scrollTo(0, 0)
   }
+
+  const radioOpt = [
+    'Quase nunca',
+    'Poucas vezes',
+    'Muitas vezes',
+    'Quase sempre'
+  ];
+
+  const optionsRadio = [
+    'Quase sempre',
+    'Muitas vezes',
+    'Poucas vezes',
+    'Quase nunca',
+];
 
   const handleSetAnswers = (idAnswer, theAnswer) => {
     setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
