@@ -257,7 +257,8 @@ export default function Home() {
     setLoading(true);
     fetch('/api/sheets', {
       method: "POST",
-      body: JSON.stringify(newRow)
+      body: JSON.stringify(newRow),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
     })
     .then( response => {
       return response.json()
