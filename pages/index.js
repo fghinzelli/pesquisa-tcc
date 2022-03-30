@@ -40,7 +40,7 @@ export default function Home() {
           return total + 1;
         }
       }, 0)
-      if (countAnswers === 50) {
+      if (countAnswers === 1) {
         setRespostasPendentes(false);
         handleSetPage(3);
       } else {
