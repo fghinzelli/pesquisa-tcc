@@ -116,8 +116,7 @@ export default function Home() {
     setLoading(true);
     fetch('/api/sheets', {
       method: "POST",
-      body: JSON.stringify(newRow),
-      headers: {"Content-type": "application/json; charset=UTF-8"}
+      body: JSON.stringify(newRow)
     })
     .then( response => {
       return response.json()
@@ -168,7 +167,7 @@ export default function Home() {
           <Grid item xs={12}>
             <Box sx={{ mx: 'auto' }}>
               <Stack spacing={2} direction="row">
-                <Button variant="contained" color="inherit" onClick={() => handleSetPage(2)}>Iniciar</Button>
+                <Button variant="contained" color="primary" onClick={() => handleSetPage(2)}>Iniciar</Button>
               </Stack>
             </Box>
           </Grid>
@@ -196,7 +195,7 @@ export default function Home() {
             <Box>
               {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
               <Stack spacing={2} direction="row">
-                  <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
+                  <Button variant="contained" color="primary" onClick={handleValidacao}>Próxima</Button>
               </Stack>
               
             </Box>
@@ -223,7 +222,7 @@ export default function Home() {
             <Box>
               {respostasPendentes ? <Alert sx={{marginBottom: '12px'}} severity="error">Por favor, preencha todos os campos obrigatórios</Alert> : null }
               <Stack spacing={2} direction="row">
-                  <Button variant="contained" color="inherit" onClick={handleValidacao}>Próxima</Button>
+                  <Button variant="contained" color="primary" onClick={handleValidacao}>Próxima</Button>
               </Stack>
               
             </Box>
