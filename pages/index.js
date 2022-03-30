@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { questions } from '../config/questions'
 
 export default function Home() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(4);
   const [answers, setAnswers] = useState([])
   const [totalPerfis, setTotalPerfis] = useState({})
   const [respostasPendentes, setRespostasPendentes] = useState(false);
