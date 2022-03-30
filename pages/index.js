@@ -26,12 +26,7 @@ export default function Home() {
     'Quase sempre'
   ];
 
-  const optionsRadio = [
-    'Quase sempre',
-    'Muitas vezes',
-    'Poucas vezes',
-    'Quase nunca',
-];
+  const optionsRadio = radioOpt.reverse()
 
   const handleSetAnswers = (idAnswer, theAnswer) => {
     setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
@@ -45,7 +40,7 @@ export default function Home() {
           return total + 1;
         }
       }, 0)
-      if (countAnswers === 1) {
+      if (countAnswers === 50) {
         setRespostasPendentes(false);
         handleSetPage(3);
       } else {
