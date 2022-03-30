@@ -254,8 +254,6 @@ export default function Home() {
     answers.forEach(answer => newRow[labelQuestions[answer.id]] = answer.answer)
     let now = new Date();
     newRow['Carimbo de data/hora'] = now.toLocaleString('pt-BR');
-    console.log('newRow', newRow)
-    console.log('newRowJson', JSON.stringify(newRow))
     setLoading(true);
     fetch('/api/sheets', {
       method: "POST",
