@@ -11,7 +11,7 @@ export const questions = {
     { id: 8, title: '8. Fico extremamente desconfortável quando não realizo um processo de compra com o objetivo inicial desejado.'},
     { id: 9, title: '9. Sou exigente, nos processos de compra que participo.'},
     { id: 10, title: '10. Na maioria das ocasiões evito realizar concessões.'},
-    { id: 11, title: '11. Sinto-me responsável por fazer os fornecedores da empresa se sentirem bem, com a parceria realizada.'},
+    { id: 11, title: '11. Sinto-me responsável por fazer os fornecedores da empresa "se sentirem bem", com a parceria realizada.'},
     { id: 12, title: '12. Durante um processo de negociação, raramente utilizo a palavra NÃO.'},
     { id: 13, title: '13. Tenho vergonha de pedir descontos, por diversos fatores.'},
     { id: 14, title: '14. Prefiro ceder para evitar discussões nas rodadas de negociações.'},
