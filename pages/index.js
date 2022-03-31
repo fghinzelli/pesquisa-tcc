@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { questions } from '../config/questions'
 
 export default function Home() {
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(1);
   const [answers, setAnswers] = useState([])
   const [totalPerfis, setTotalPerfis] = useState({})
   const [respostasPendentes, setRespostasPendentes] = useState(false);
@@ -40,7 +40,7 @@ export default function Home() {
           return total + 1;
         }
       }, 0)
-      if (countAnswers === 1) {
+      if (countAnswers === 50) {
         setRespostasPendentes(false);
         handleSetPage(3);
       } else {
@@ -118,7 +118,6 @@ export default function Home() {
     })
     .then( data => {
       console.log('Resposta gravada com sucesso!');
-      console.log(data.data)
       setLoading(false);
       handleSetPage(5);
     })
