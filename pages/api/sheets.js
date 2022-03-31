@@ -23,19 +23,24 @@ const appendSpreadsheet = async (row) => {
   }
 }
 
-export default (req, res) => {
+export default async (req, res) => {
   /* add new Row data */
   
   if (req.method === 'POST') {
-    const newRow = JSON.parse(req.body)
-    appendSpreadsheet(newRow)
-    res.statusCode = 201
-    res.json({
-        code: 201,
-        data: {
-            message: 'Created',
-            data: newRow
-        }
-    })
+    try {
+      const newRow = JSON.parse(req.body)
+      await appendSpreadsheet(newRow)
+      res.statusCode = 201
+      res.json({
+          code: 201,
+          data: {
+              message: 'Created',
+              data: newRow
+          }
+      })
+    } catch (e) {
+      console.log("Error:", e)
+      return res.status(500).end('Ocorreu um erro ao enviar os dados')
+    }
   }
 }
