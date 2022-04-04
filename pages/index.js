@@ -26,7 +26,8 @@ export default function Home() {
     'Quase sempre'
   ];
 
-  const optionsRadio = radioOpt.reverse()
+  const optionsRadio = [...radioOpt];
+  optionsRadio.reverse();
 
   const handleSetAnswers = (idAnswer, theAnswer) => {
     setAnswers([...answers.filter(i => i.id !== idAnswer), {id: idAnswer, answer: theAnswer}]);
